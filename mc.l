@@ -33,20 +33,6 @@ char *string_buf_ptr;
 
 
 %x comentario
-%x comentarioC
-%x comentariocmas
-
-"/*"         BEGIN(comentarioc);
-
-<comentarioc>[^*\n]*       /* come todo lo que no sea '*' */
-<comentarioc>"*"+[^*/\n]*  /* come '*'s no seguidos por '/' */
-<comentarioc>\n            ++num_linea;
-<comentarioc>"*"+"/"       BEGIN(INITIAL);printf("Se encontro un comentario tipo C \n");
-
-"//"         BEGIN(comentariocmas);
-
-<comentariocmas>[^\n]*
-<comentariocmas>\n       BEGIN(INITIAL);printf("Se encontro un comentario tipo C++\n");
 %%
 
 " "      {adjust(); continue;}
@@ -56,7 +42,10 @@ entero     {adjust(); return ENTERO;}
 
 [0-9]+   {adjust(); yylval.ival=atoi(yytext); return INT;}
 
-
+['_''@'a-zA-Z]+['_''@'a-zA-Z0-9]*  {	adjust(); 
+					yylval.sval=yytext;	 
+					return IDENTIFICADOR;
+					}
 
 
 
