@@ -42,7 +42,10 @@ entero     {adjust(); return ENTERO;}
 
 [0-9]+   {adjust(); yylval.ival=atoi(yytext); return INT;}
 
-
+['_''@'a-zA-Z]+['_''@'a-zA-Z0-9]*  {	adjust(); 
+					yylval.sval=yytext;	 
+					return IDENTIFICADOR;
+					}
 
 
 

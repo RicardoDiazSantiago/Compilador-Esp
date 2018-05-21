@@ -12,7 +12,7 @@ string tokname(int tok);
 
 string toknames[] = {"ID", "STRING", "INT","DESPLIEGA","SI",
                      "OTRO","AND","OR","NOT","DIFER","IGUAL",
-                     "ENTERO"};
+                     "ENTERO","IDENTIFICADOR"};
 
 
 string tokname(tok) {
@@ -37,6 +37,9 @@ int main(int argc, char **argv) {
          case INT:
            printf("%10s %4d %d\n",tokname(tok),EM_tokPos,yylval.ival);
            break;
+	case IDENTIFICADOR:
+           printf("%10s %4d %s\n",tokname(tok),EM_tokPos,yylval.sval);
+	  break;
          default:
            printf("%10s %4d\n",tokname(tok),EM_tokPos);
        }

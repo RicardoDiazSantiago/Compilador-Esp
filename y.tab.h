@@ -10,4 +10,5 @@ typedef union {
 #define SI        262
 #define OTRO      263
 #define ENTERO    269
+#define IDENTIFICADOR 270
 extern YYSTYPE yylval;
