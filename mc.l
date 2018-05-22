@@ -5,6 +5,7 @@
 #include "util.h"
 #include "y.tab.h"
 #include "errormsg.h"
+#include <math.h> // Se agrega math.h para el uso de atof y atoi 
 
 int charPos=1;
 
@@ -31,16 +32,20 @@ char *string_buf_ptr;
 
 %}
 
+DIGITO [0-9]
 
-%x comentario
 %%
 
 " "      {adjust(); continue;}
 \n       {adjust(); EM_newline(); continue;}
+ /* Enteros y flotantes */
+{DIGITO}+     {adjust();yylval.ival=atoi(yytext);return ENTERO;}
 
-entero     {adjust(); return ENTERO;}
+{DIGITO}+"."{DIGITO}*|{DIGITO}*"."{DIGITO}+  {adjust();yylval.fval=atof(yytext);return FLOTANTE;}
 
-[0-9]+   {adjust(); yylval.ival=atoi(yytext); return INT;}
+
+
+
 
 
 

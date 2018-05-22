@@ -10,9 +10,8 @@ int yylex(void); /* prototipo para la funcion de analisis lexico */
 
 string tokname(int tok);
 
-string toknames[] = {"ID", "STRING", "INT","DESPLIEGA","SI",
-                     "OTRO","AND","OR","NOT","DIFER","IGUAL",
-                     "ENTERO"};
+string toknames[] = {"ID", "STRING", "ENTERO","DESPLIEGA","SI",
+                     "OTRO","FLOTANTE"};//Se agrego FLOTANTE
 
 
 string tokname(tok) {
@@ -31,11 +30,14 @@ int main(int argc, char **argv) {
      printf("%c \n",tok);
      else
        switch(tok) {
-         case ID: case STRING:
+         /*case ID: case STRING:
            printf("%10s %4d %s\n",tokname(tok),EM_tokPos,yylval.sval);
-           break;
-         case INT:
+           break;*/
+         case ENTERO:
            printf("%10s %4d %d\n",tokname(tok),EM_tokPos,yylval.ival);
+           break;
+         case FLOTANTE: //Se agrego flotante
+           printf("%10s %4d %f\n",tokname(tok),EM_tokPos,yylval.fval);
            break;
          default:
            printf("%10s %4d\n",tokname(tok),EM_tokPos);
