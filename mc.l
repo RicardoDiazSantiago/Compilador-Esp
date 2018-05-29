@@ -33,7 +33,12 @@ char *string_buf_ptr;
 
 %x cade 
 %x comentario
+%x main
 %%
+main-p BEGIN(main);
+principal\(\)\{  {adjust();
+                  printf("main encontrado");                
+                  }
 
 " "      {adjust(); continue;}
 \n       {adjust(); EM_newline(); continue;}
@@ -45,6 +50,7 @@ entero     {adjust(); return ENTERO;}
 
 \"              {adjust(); string_buf_ptr = string_buf;  
                  BEGIN(cade);
+                 
                  /*Regla que da inicio a la condicion de arranque mostrada arriba %x cade especificando las comillas que inician
 		  *Para la especificación de una cadena "cadena"
 		 */
@@ -68,6 +74,7 @@ entero     {adjust(); return ENTERO;}
 
 <cade>\n        {
                    /* genera un mensaje de error ya que una cadena no puede estar separada en código por un salto de linea */
+                   adjust(); EM_error(EM_tokPos,"Declaracion ilegal de cadena");
                    }
 
 <cade>\\[0-7]{1,3} {
@@ -87,6 +94,7 @@ entero     {adjust(); return ENTERO;}
                    /* genera un error - secuencia de escape errónea;
                     * algo como '\48' o '\0777777'
                     */
+                    adjust(); EM_error(EM_tokPos,"Declaracion ilegal de cadena");
                    }
 
 <cade>\\n    {adjust(); *string_buf_ptr++ = '\n';} 
@@ -110,6 +118,11 @@ entero     {adjust(); return ENTERO;}
                       cada caracter leído se guarda en el apuntador a STRING   
                     */
                    }
+\}  {adjust();
+          BEGIN(INITIAL); 
+          printf("Cierre encontrado");
+          return MAIN;
+          }
 
 
   /*<<EOF>> {printf("\nFin de Archivo encontrado."); exit(0); }*/
