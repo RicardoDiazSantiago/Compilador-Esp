@@ -31,6 +31,48 @@ char *string_buf_ptr;
 
 %}
 
+//Anadido de codigo Equipo 7 funciones
+
+//DECLARACION DE LA SENTENCIA DE IDENTIFICADOR
+ID 			[A-Z][a-z]+[0-9]*?
+
+
+//Sentencias de Control
+"si" {return(SI)}
+"sino" {return(SINO)}
+"PARA" {return(PARA)}
+
+//Funciones Generales
+"principal" {return(PRINCIPAL)}
+"despliega" {return(DESPLIEGA)}
+"retorna" {return(RETORNA)}
+
+//ID ACCION
+{ID} 		{yylval.texto=strdup(yytext); return(ID);}
+
+//Delimitadores ****
+
+"(" 	{return(PARENTESISA);}
+")" 	{return(PARENTESISC);}
+"," 	{return(COMA);}
+"=" 	{return(IGUAL);}
+"==" {return(IGUALIGUAL)}
+"{" 	{return(LLAVEA);}
+"}" 	{return(LLAVEC);}
+";" 	{return(PUNTOCOMOA);}
+":"		{return(DOSPUNTOS);}
+">" 	{return(MAYORQUE);}
+"<"		{return(MENORQUE);}
+"+"		{return(MAS);}
+"-"		{return(MENOS);}
+"*"		{return(MULTIPLICACION);}
+"/"		{return(DIVISION);}
+"&"		{return(AND);}
+"|"		{return(OR);}
+"'"		{return(COMILLA);}
+
+
+
 
 %x comentario
 %%
@@ -47,5 +89,4 @@ entero     {adjust(); return ENTERO;}
 
 
   /*<<EOF>> {printf("\nFin de Archivo encontrado."); exit(0); }*/
-
 .        {adjust(); EM_error(EM_tokPos,"token ilegal");}
