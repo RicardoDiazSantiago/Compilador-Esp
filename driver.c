@@ -12,7 +12,7 @@ string tokname(int tok);
 
 string toknames[] = {"ID", "STRING", "INT","DESPLIEGA","SI",
                      "OTRO","AND","OR","NOT","DIFER","IGUAL",
-                     "ENTERO"};
+                     "ENTERO","MAIN"};
 
 
 string tokname(tok) {
